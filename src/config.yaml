@@ -1,0 +1,43 @@
+# Dataset Settings
+datasetRootDir: "./dataset"
+batchSize: 32
+fullPointNum: 5000  # point number that each sample contains
+downSample: 0  # 1 -> yes; 0 -> no.
+downSamplePointNum: 2048
+channelNum: 3
+trainDataNum: 493  # sample num of training
+testDataNum: 98  # sample num of testing
+
+# Global Settings
+model: PointNeXT  # now support PointNet, PointNet++, DGCNN, RepSurf, PointMLP, PointNeXT
+device: cuda  # cpu or cuda, not support Apple and ROCm yet
+outputNum: 2
+mode: test  # train or test
+
+# Model Settings
+# DGCNN && RepSurf
+k: 5
+
+# Training Settings
+learningRate: 0.0001
+epochs: 300
+optimizer: Adam
+weightDecay: 0.0004  # for AdamW optimizer
+seed: 42  # random seed
+val: 1  # yes -> 1; no -> 0.
+weightSavingPath: "./weights"
+checkpoint: "None"
+lossFunction: "Cross Entropy Loss"  # Focal Loss or Cross Entropy Loss
+# Cross Entropy Loss
+holeWeight: 100
+otherWeight: 1
+# Focal Loss
+alpha: 0.7
+gamma: 5
+
+# Testing Settings
+weightPath: "./weights/PointNeXT_loss_best.pth"
+
+# Tensorboard Settings
+enableTensorboard: 1  # 1 -> yes; 0 -> no.
+logPath: "./logs"
