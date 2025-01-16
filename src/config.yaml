@@ -2,21 +2,21 @@
 datasetRootDir: "./dataset"
 batchSize: 32
 fullPointNum: 5000  # point number that each sample contains
-downSample: 0  # 1 -> yes; 0 -> no.
+downSample: 1  # 1 -> yes; 0 -> no.
 downSamplePointNum: 2048
 channelNum: 3
 trainDataNum: 493  # sample num of training
 testDataNum: 98  # sample num of testing
 
-# Global Settings
-model: PointNeXT  # now support PointNet, PointNet++, DGCNN, RepSurf, PointMLP, PointNeXT
+# Global Setting
+model: TempModel  # now support PointNet, PointNet++, DGCNN, RepSurf, PointMLP, PointNeXT, GANN
 device: cuda  # cpu or cuda, not support Apple and ROCm yet
 outputNum: 2
 mode: test  # train or test
 
 # Model Settings
 # DGCNN && RepSurf
-k: 5
+k: 32
 
 # Training Settings
 learningRate: 0.0001
@@ -36,7 +36,7 @@ alpha: 0.7
 gamma: 5
 
 # Testing Settings
-weightPath: "./weights/PointNeXT_loss_best.pth"
+weightPath: "./weights/TempModel_acc_best.pth"
 
 # Tensorboard Settings
 enableTensorboard: 1  # 1 -> yes; 0 -> no.

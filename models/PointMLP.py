@@ -5,7 +5,7 @@ from models.utils.PointMLPUtils import *
 
 class PointMLP(nn.Module):
     def __init__(self, num_classes=50,points=2048, embed_dim=64, groups=1, res_expansion=1.0,
-                 activation="relu", bias=True, use_xyz=True, normalize="anchor",
+                 activation="relu", bias=True, use_xyz=True, normalize="center",
                  dim_expansion=[2, 2, 2, 2], pre_blocks=[2, 2, 2, 2], pos_blocks=[2, 2, 2, 2],
                  k_neighbors=[32, 32, 32, 32], reducers=[4, 4, 4, 4],
                  de_dims=[512, 256, 128, 128], de_blocks=[2,2,2,2],
@@ -30,7 +30,7 @@ class PointMLP(nn.Module):
             pos_block_num = pos_blocks[i]
             kneighbor = k_neighbors[i]
             reduce = reducers[i]
-            anchor_points = anchor_points // reduce
+            anchor_points = anchor_points // reduce  # 降采样几倍
             # append local_grouper_list
             local_grouper = LocalGrouper(last_channel, anchor_points, kneighbor, use_xyz, normalize)  # [b,g,k,d]
             self.local_grouper_list.append(local_grouper)
@@ -83,7 +83,7 @@ class PointMLP(nn.Module):
         )
         self.en_dims = en_dims
 
-    def forward(self, x, cls_label=None):
+    def forward(self, x):
         xyz = x.permute(0, 2, 1)
         # x = torch.cat([x,norm_plt],dim=1)
         x = self.embedding(x)  # B,D,N

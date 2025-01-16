@@ -8,11 +8,13 @@ from models.DGCNN import DGCNN
 from models.RepSurf import RepSurf
 from models.PointMLP import PointMLP
 from models.PointNeXT import PointNeXT
+from models.GANN import GANN
 
 import torch
 import torch.nn.functional as F
 
 from models.RepSurf import RepSurf
+from models.TempModel import TempModel
 
 
 class FocalLoss(torch.nn.Module):
@@ -126,6 +128,10 @@ def model_chooser(model_name, device, input_channel, output_channel, k):
         return PointMLP(output_channel).to(device)
     elif model_name == 'PointNeXT':
         return PointNeXT(output_channel).to(device)
+    elif model_name == 'GANN':
+        return GANN(input_channel, output_channel, k).to(device)
+    elif model_name == 'TempModel':
+        return TempModel(output_channel).to(device)
     else :
         raise KeyError('Unknown model name.')
 
